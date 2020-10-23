@@ -1,0 +1,308 @@
+function Game.new 0
+push constant 7
+call Memory.alloc 1
+pop pointer 0
+push pointer 0
+call Game.createGame 1
+pop temp 0
+push pointer 0
+return
+function Game.createGame 0
+push argument 0
+pop pointer 0
+push constant 0
+not
+call Screen.setColor 1
+pop temp 0
+push constant 505
+push constant 131
+push constant 133
+call Player.new 3
+pop this 4
+push constant 0
+push constant 87
+push constant 83
+call Player.new 3
+pop this 5
+push constant 6
+push constant 25
+push constant 505
+push constant 25
+call Screen.drawLine 4
+pop temp 0
+call Ball.new 0
+pop this 6
+push pointer 0
+call Game.writeScore 1
+pop temp 0
+push constant 0
+pop this 2
+push constant 0
+return
+function Game.writeScore 0
+push argument 0
+pop pointer 0
+push constant 0
+push constant 30
+call Output.moveCursor 2
+pop temp 0
+push constant 5
+call String.new 1
+push constant 83
+call String.appendChar 2
+push constant 67
+call String.appendChar 2
+push constant 79
+call String.appendChar 2
+push constant 82
+call String.appendChar 2
+push constant 69
+call String.appendChar 2
+call Output.printString 1
+pop temp 0
+push constant 1
+push constant 30
+call Output.moveCursor 2
+pop temp 0
+push this 5
+call Player.getScore 1
+call Output.printInt 1
+pop temp 0
+push constant 1
+push constant 32
+call Output.moveCursor 2
+pop temp 0
+push constant 58
+call Output.printChar 1
+pop temp 0
+push constant 1
+push constant 34
+call Output.moveCursor 2
+pop temp 0
+push this 4
+call Player.getScore 1
+call Output.printInt 1
+pop temp 0
+push constant 0
+return
+function Game.checkGoal 6
+push argument 0
+pop pointer 0
+push this 6
+call Ball.getX 1
+pop local 3
+push this 6
+call Ball.getSize 1
+pop local 4
+push local 3
+push local 4
+add
+push constant 505
+push local 4
+sub
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push this 2
+push constant 1
+eq
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push this 6
+call Ball.getY 1
+pop local 2
+push this 4
+call Player.getYSize 1
+pop local 1
+push this 4
+call Player.getY 1
+pop local 0
+push local 2
+push local 4
+sub
+push local 0
+push local 1
+add
+gt
+push local 2
+push local 4
+add
+or
+push local 0
+lt
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push this 5
+call Player.increaseScore 1
+pop temp 0
+push pointer 0
+call Game.writeScore 1
+pop temp 0
+push this 6
+call Ball.drawNewBall 1
+pop temp 0
+label IF_FALSE2
+push constant 0
+pop this 2
+push constant 0
+return
+label IF_FALSE1
+push constant 1
+pop this 2
+label IF_FALSE0
+push local 3
+push local 4
+sub
+push constant 6
+push local 4
+add
+eq
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
+push this 2
+push constant 1
+eq
+if-goto IF_TRUE4
+goto IF_FALSE4
+label IF_TRUE4
+push this 6
+call Ball.getY 1
+pop local 2
+push this 5
+call Player.getY 1
+pop local 0
+push this 5
+call Player.getYSize 1
+pop local 1
+push local 2
+push local 4
+sub
+push local 0
+push local 1
+add
+gt
+push local 2
+push local 4
+add
+or
+push local 0
+lt
+if-goto IF_TRUE5
+goto IF_FALSE5
+label IF_TRUE5
+push this 4
+call Player.increaseScore 1
+pop temp 0
+push pointer 0
+call Game.writeScore 1
+pop temp 0
+push this 6
+call Ball.drawNewBall 1
+pop temp 0
+label IF_FALSE5
+push constant 0
+pop this 2
+push constant 0
+return
+label IF_FALSE4
+push constant 1
+pop this 2
+label IF_FALSE3
+push constant 0
+return
+function Game.moves 0
+push argument 0
+pop pointer 0
+push this 4
+push this 3
+call Player.move 2
+pop temp 0
+push this 5
+push this 3
+call Player.move 2
+pop temp 0
+push this 6
+call Ball.move 1
+pop temp 0
+push pointer 0
+call Game.checkGoal 1
+pop temp 0
+push constant 6
+call Sys.wait 1
+pop temp 0
+push constant 0
+return
+function Game.play 2
+push argument 0
+pop pointer 0
+push constant 0
+pop local 1
+label WHILE_EXP0
+push local 1
+not
+not
+if-goto WHILE_END0
+label WHILE_EXP1
+push local 0
+push constant 0
+eq
+not
+if-goto WHILE_END1
+call Keyboard.keyPressed 0
+pop local 0
+push pointer 0
+call Game.moves 1
+pop temp 0
+goto WHILE_EXP1
+label WHILE_END1
+push local 0
+push constant 140
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 0
+not
+pop local 1
+label IF_FALSE0
+push local 0
+pop this 3
+label WHILE_EXP2
+push local 0
+push constant 0
+eq
+not
+not
+if-goto WHILE_END2
+call Keyboard.keyPressed 0
+pop local 0
+push pointer 0
+call Game.moves 1
+pop temp 0
+goto WHILE_EXP2
+label WHILE_END2
+goto WHILE_EXP0
+label WHILE_END0
+push constant 0
+return
+function Game.dispose 0
+push argument 0
+pop pointer 0
+push this 4
+call Player.dispose 1
+pop temp 0
+push this 5
+call Player.dispose 1
+pop temp 0
+push this 6
+call Ball.dispose 1
+pop temp 0
+push pointer 0
+call Memory.deAlloc 1
+pop temp 0
+push constant 0
+return

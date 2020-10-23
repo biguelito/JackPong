@@ -1,0 +1,77 @@
+class Player{
+	field int x, y, xsize, ysize, score;
+	field char mvup, mvdown, mv; 
+
+	constructor Player new(int tox, char tomvup, char tomvdown){
+		do Screen.setColor(true);
+		let score = 0;
+		let xsize = 6;
+		let ysize = 40;
+		let mvup = tomvup;
+		let mvdown = tomvdown;
+
+		let y = 112; 
+		let x = tox; 
+
+		do Screen.drawRectangle(x,y,x+xsize,y+ysize);
+
+		return this;
+	}
+
+	method void move(char k){
+		if ((k = mvup) | (k = mvdown)){
+			let mv = k;
+		}
+		if (mv = mvup){
+			do moveup();
+		}
+		if (mv = mvdown){
+			do movedown();
+		}
+		
+		return;
+	} 
+	method void moveup(){
+		if (y > 25){
+			do Screen.setColor(false);
+			do Screen.drawRectangle(x, (y + ysize) - 1, x + xsize, y + ysize);
+			let y = y - 1;
+			do Screen.setColor(true);
+			do Screen.drawRectangle(x, y, x + xsize, y+1);
+		}
+		return;
+	}
+
+	method void movedown(){
+		if ((y + ysize) < 255){
+			do Screen.setColor(false);
+			do Screen.drawRectangle(x, y, x + xsize, y + 1);
+			let y = y + 1;
+			do Screen.setColor(true);
+			do Screen.drawRectangle(x, (y + ysize) - 1, x + xsize, y + ysize);
+		}
+		return; 
+	}
+
+	method int getY(){
+		return y;
+	}
+
+	method int getYSize(){
+		return ysize;
+	}
+
+	method int getScore(){
+		return score;
+	}
+
+	method void increaseScore(){
+		let score = score + 1;
+		return;
+	}
+
+	method void dispose() {
+      do Memory.deAlloc(this);
+      return;
+   }
+}	

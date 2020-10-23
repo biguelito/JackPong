@@ -1,0 +1,166 @@
+class Ball{
+	field int x, y, size, vel;
+	field booelan right, up ;
+
+	constructor Ball new(){
+		let x = 255;
+		let y = 127;
+		let size = 5;
+		let right = true;
+		let up =  true;
+
+		do Screen.setColor(true);
+		do Screen.drawCircle(x, y, size);
+
+		return this;
+	}
+
+	method void drawNewBall(){
+		do Screen.setColor(false);
+		do Screen.drawCircle(x, y, size);
+
+		let x = 255;
+		let y = 127;
+		//let right = ~right;
+		//let up = ~up;
+
+		do Screen.setColor(true);
+		do Screen.drawCircle(x, y, size);
+
+
+		return;
+	}
+
+	method void move(){
+		if ((right) & (up)){
+			do moveRup();
+		}
+		if ((right) & ~(up)){
+			do moveRdown();
+		}
+		if (~(right) & ~(up)){
+			do moveLdown();
+		}
+		if (~(right) & (up)){
+			do moveLup();
+		}
+		return; 
+	}
+
+	method void moveRup(){
+		if ((y > (size + 26)) & (x < (505 - size))){
+			do Screen.setColor(false);
+			do Screen.drawCircle(x,y,size);
+
+			let x = x + 1;
+			let y = y - 1;
+
+			do Screen.setColor(true);
+			do Screen.drawCircle(x,y,size);
+			return;
+		}
+		if (y > (size + 26)){
+			let right = false;
+			return;
+		}
+		if (x < (510 - size)){
+			let up = false;
+			return;
+		}
+
+		do moveLdown();
+		return;
+	}
+
+	method void moveRdown(){
+		if ((y < (254 - size)) & (x < (505 - size))){
+			do Screen.setColor(false);
+			do Screen.drawCircle(x,y,size);
+
+			let x = x + 1;
+			let y = y + 1;
+
+			do Screen.setColor(true);
+			do Screen.drawCircle(x,y,size);
+			return;
+		}
+		if (y < (254 - size)){
+			let right = false;
+			return;
+		}
+		if (x < (510 - size)){
+			let up = true;
+			return;
+		}
+
+		do moveLup();
+		return;
+	}
+
+	method void moveLdown(){
+		if ((y < (254 - size)) & (x > (size + 6))){
+			do Screen.setColor(false);
+			do Screen.drawCircle(x,y,size);
+
+			let x = x - 1;
+			let y = y + 1;
+
+			do Screen.setColor(true);
+			do Screen.drawCircle(x,y,size);
+			return;
+		}
+		if (y < (254 - size)){
+			let right = true;
+			return;
+		}
+		if (x > (size + 1)){
+			let up = true;
+			return;
+		}
+
+		do moveRup();
+		return;
+	} 
+
+	method void moveLup(){
+		if ((y > (size + 26)) & (x > (size + 6))){
+			do Screen.setColor(false);
+			do Screen.drawCircle(x,y,size);
+
+			let x = x - 1;
+			let y = y - 1;
+
+			do Screen.setColor(true);
+			do Screen.drawCircle(x,y,size);
+			return;
+		}
+		if (y > (size + 26)){
+			let right = true;
+			return;
+		}
+		if (x > (size + 1)){
+			let up = false;
+			return;
+		}
+
+		do moveRdown();
+		return;
+	}
+
+	method int getY(){
+		return y;
+	}
+
+	method int getX(){
+		return x;
+	}
+	
+	method int getSize(){
+		return size;
+	}
+
+	method void dispose(){
+		do Memory.deAlloc(this);
+		return;
+	}
+}

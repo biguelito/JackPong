@@ -1,0 +1,125 @@
+class Game{
+	field int x, y, goal;
+	field char movement; 
+	field Player pc, pc2;
+	field Ball ball;
+	
+	constructor	Game new(){
+		do createGame();
+		return this;
+	}
+
+	method void createGame(){
+		do Screen.setColor(true);		
+		let pc = Player.new(505, 131, 133);
+		let pc2 = Player.new(0, 87, 83);
+		do Screen.drawLine(6, 25, 505, 25);
+
+		let ball = Ball.new();
+
+		do writeScore();
+		let goal = 0;
+
+		return;
+	}
+
+	method void writeScore(){
+		do Output.moveCursor(0, 30);
+		do Output.printString("SCORE");
+		do Output.moveCursor(1, 30);
+		do Output.printInt(pc2.getScore());
+		do Output.moveCursor(1, 32);
+		do Output.printChar(58);
+		do Output.moveCursor(1, 34);
+		do Output.printInt(pc.getScore());
+
+		return;
+	}
+
+	method void checkGoal(){
+		var int py, pysize, bally, ballx, ballsize,sc; 
+		
+		let ballx = ball.getX();
+		let ballsize = ball.getSize();
+
+		if ((ballx + ballsize) = (505 - ballsize)){
+			if (goal = 1){
+				let bally = ball.getY();
+				let pysize = pc.getYSize();
+				let py = pc.getY();
+
+				if ((bally - ballsize) > (py + pysize) | (bally + ballsize) < (py)) {
+					do pc2.increaseScore();
+					do writeScore();
+					do ball.drawNewBall();
+				}
+				
+				let goal = 0;
+				return;
+			}
+			let goal = 1;
+		}
+
+		if ((ballx - ballsize) = (6 + ballsize)){
+			if (goal = 1){			
+				let bally = ball.getY();
+				let py = pc2.getY();
+				let pysize = pc2.getYSize();
+
+				if ((bally - ballsize) > (py + pysize) | (bally + ballsize) < (py)){
+					do pc.increaseScore();
+					do writeScore();
+					do ball.drawNewBall();
+				}
+				let goal = 0;	
+				return;
+			}
+			let goal = 1;
+		}
+
+		return;
+	}
+
+	method void moves(){
+		do pc.move(movement);
+		do pc2.move(movement);
+		do ball.move();
+		do checkGoal();
+		do Sys.wait(6);
+		return;
+	}
+
+	method void play(){
+		var char command;
+		var boolean exit;
+		let exit = false;
+
+		while (~exit){
+			while (command = 0){
+				let command = Keyboard.keyPressed();
+				do moves();
+			}
+				
+			if (command = 140){
+				let exit = true;
+			}
+			
+			let movement = command;
+
+			while (~(command = 0)){
+				let command = Keyboard.keyPressed();
+				do moves();
+			}
+		}	
+
+		return;
+	}
+
+	method void dispose(){
+		do pc.dispose();
+		do pc2.dispose();
+		do ball.dispose();
+		do Memory.deAlloc(this);
+		return;
+	}
+}
