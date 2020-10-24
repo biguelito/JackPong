@@ -1,7 +1,14 @@
+/**
+Player class
+Move the player up and down
+*/
 class Player{
 	field int x, y, xsize, ysize, score;
 	field char mvup, mvdown, mv; 
 
+	/**
+	Create the player on the given side
+	*/
 	constructor Player new(int tox, char tomvup, char tomvdown){
 		do Screen.setColor(true);
 		let score = 0;
@@ -18,6 +25,9 @@ class Player{
 		return this;
 	}
 
+	/**
+	Check if the player need to move up or down
+	*/
 	method void move(char k){
 		if ((k = mvup) | (k = mvdown)){
 			let mv = k;
@@ -31,6 +41,10 @@ class Player{
 		
 		return;
 	} 
+
+	/**
+	Move the player up 1 pixel on y axis
+	*/
 	method void moveup(){
 		if (y > 25){
 			do Screen.setColor(false);
@@ -42,6 +56,9 @@ class Player{
 		return;
 	}
 
+	/**
+	Move the player down 1 pixel on y axis
+	*/
 	method void movedown(){
 		if ((y + ysize) < 255){
 			do Screen.setColor(false);
@@ -53,23 +70,38 @@ class Player{
 		return; 
 	}
 
-	method int getY(){
-		return y;
-	}
-
-	method int getYSize(){
-		return ysize;
-	}
-
-	method int getScore(){
-		return score;
-	}
-
+	/**
+	Increase the score of this player
+	*/
 	method void increaseScore(){
 		let score = score + 1;
 		return;
 	}
 
+	/**
+	Return the y axis
+	*/
+	method int getY(){
+		return y;
+	}
+
+	/**
+	Return the size on the y axis
+	*/
+	method int getYSize(){
+		return ysize;
+	}
+	
+	/**
+	Return the score of this player
+	*/
+	method int getScore(){
+		return score;
+	}
+
+	/**
+	Dispose this player
+	*/
 	method void dispose() {
       do Memory.deAlloc(this);
       return;

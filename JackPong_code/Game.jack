@@ -1,15 +1,19 @@
+/**
+Body of the game
+Controls when the players and the ball have to move
+Check whether a player has scored
+*/
 class Game{
 	field int x, y, goal;
 	field char movement; 
 	field Player pc, pc2;
 	field Ball ball;
 	
+	/**
+	Create the screen of the game
+	Draw players, ball, and call writeScore()
+	*/
 	constructor	Game new(){
-		do createGame();
-		return this;
-	}
-
-	method void createGame(){
 		do Screen.setColor(true);		
 		let pc = Player.new(505, 131, 133);
 		let pc2 = Player.new(0, 87, 83);
@@ -20,9 +24,13 @@ class Game{
 		do writeScore();
 		let goal = 0;
 
-		return;
+		return this;
 	}
 
+	/**
+	Create the score
+	rewrites the score every time a goals is scored
+	*/
 	method void writeScore(){
 		do Output.moveCursor(0, 30);
 		do Output.printString("SCORE");
@@ -36,12 +44,19 @@ class Game{
 		return;
 	}
 
+	/**
+	Check if a goal is scored
+	Handles the two scores problem using the boolean "goal"
+	*/
 	method void checkGoal(){
 		var int py, pysize, bally, ballx, ballsize,sc; 
 		
 		let ballx = ball.getX();
 		let ballsize = ball.getSize();
 
+		/**
+		505 = 511 - 6, 6 is the player xsize
+		*/
 		if ((ballx + ballsize) = (505 - ballsize)){
 			if (goal = 1){
 				let bally = ball.getY();
@@ -80,6 +95,9 @@ class Game{
 		return;
 	}
 
+	/**
+	Call the functions that does all the needed movements and to check if it's a goal
+	*/
 	method void moves(){
 		do pc.move(movement);
 		do pc2.move(movement);
@@ -89,6 +107,11 @@ class Game{
 		return;
 	}
 
+	/**
+	The skeletons of the game
+	Track the players and the ball movement
+	Deal with the Keyboard input
+	*/
 	method void play(){
 		var char command;
 		var boolean exit;
@@ -115,6 +138,9 @@ class Game{
 		return;
 	}
 
+	/**
+	Dispose the game
+	*/
 	method void dispose(){
 		do pc.dispose();
 		do pc2.dispose();

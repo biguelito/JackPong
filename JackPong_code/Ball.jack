@@ -1,7 +1,15 @@
+/**
+Ball clas
+Move the ball by the x and y axes
+Create a new centered ball when it's needed
+*/
 class Ball{
 	field int x, y, size, vel;
 	field booelan right, up ;
 
+	/**
+	Create the starter ball
+	*/
 	constructor Ball new(){
 		let x = 255;
 		let y = 127;
@@ -15,6 +23,9 @@ class Ball{
 		return this;
 	}
 
+	/**
+	Create a new, centered and with inverted axes ball
+	*/
 	method void drawNewBall(){
 		do Screen.setColor(false);
 		do Screen.drawCircle(x, y, size);
@@ -31,6 +42,9 @@ class Ball{
 		return;
 	}
 
+	/**
+	Check where the ball need to move
+	*/
 	method void move(){
 		if ((right) & (up)){
 			do moveRup();
@@ -47,6 +61,10 @@ class Ball{
 		return; 
 	}
 
+	/**
+	Move the ball to the right-up when it's possible
+	When not, move to where it can
+	*/
 	method void moveRup(){
 		if ((y > (size + 26)) & (x < (505 - size))){
 			do Screen.setColor(false);
@@ -72,6 +90,10 @@ class Ball{
 		return;
 	}
 
+	/**
+	Move the ball to the right-down when it's possible
+	When not, move to where it can
+	*/
 	method void moveRdown(){
 		if ((y < (254 - size)) & (x < (505 - size))){
 			do Screen.setColor(false);
@@ -97,6 +119,10 @@ class Ball{
 		return;
 	}
 
+	/**
+	Move the ball to the left-down when it's possible
+	When not, move to where it can
+	*/
 	method void moveLdown(){
 		if ((y < (254 - size)) & (x > (size + 6))){
 			do Screen.setColor(false);
@@ -122,6 +148,10 @@ class Ball{
 		return;
 	} 
 
+	/**
+	Move the ball to the left-up when it's possible
+	When not, move to where it can
+	*/
 	method void moveLup(){
 		if ((y > (size + 26)) & (x > (size + 6))){
 			do Screen.setColor(false);
@@ -147,18 +177,30 @@ class Ball{
 		return;
 	}
 
+	/**
+	Return the y axis
+	*/
 	method int getY(){
 		return y;
 	}
 
+	/**
+	Return the x axis
+	*/
 	method int getX(){
 		return x;
 	}
 	
+	/**
+	Return the ball size
+	*/
 	method int getSize(){
 		return size;
 	}
 
+	/**
+	dispose the ball
+	*/
 	method void dispose(){
 		do Memory.deAlloc(this);
 		return;

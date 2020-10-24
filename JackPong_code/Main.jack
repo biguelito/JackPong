@@ -1,9 +1,6 @@
-/*TODO:
-
-Comment ALL the code;
-
+/**
+Main function, start and dispose the game when finished
 */
-
 class Main {
     function void main() {
         var Game game;
